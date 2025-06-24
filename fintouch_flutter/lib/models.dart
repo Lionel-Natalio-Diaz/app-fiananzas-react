@@ -1,9 +1,11 @@
+enum TransactionType { income, expense }
+
 class UserCategory {
   final String id;
   final String name;
   final String icon;
   final String color;
-  final String type;
+  final TransactionType type;
   final bool? isDefault;
 
   UserCategory({
@@ -21,7 +23,7 @@ class Transaction {
   final String date;
   final String description;
   final double amount;
-  final String type;
+  final TransactionType type;
   final String category;
   final String recurrence;
   final String currency;
@@ -42,7 +44,7 @@ class RecurringTransaction {
   final String id;
   final String description;
   final double amount;
-  final String type;
+  final TransactionType type;
   final String category;
   final String recurrence;
   final String currency;
@@ -66,6 +68,7 @@ class Budget {
   double? spentAmount;
   double? remainingAmount;
   double? progressPercentage;
+  List<Transaction>? transactions;
 
   Budget({
     required this.id,
@@ -75,6 +78,7 @@ class Budget {
     this.spentAmount,
     this.remainingAmount,
     this.progressPercentage,
+    this.transactions,
   });
 }
 
