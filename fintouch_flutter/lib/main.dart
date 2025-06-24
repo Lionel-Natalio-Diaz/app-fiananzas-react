@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'providers/app_state.dart';
+import 'screens/login_screen.dart';
+import 'screens/onboarding_screen.dart';
 import 'theme.dart';
 
 void main() {
@@ -18,8 +20,27 @@ class FintouchApp extends StatelessWidget {
       child: MaterialApp(
         title: 'Fintouch',
         theme: AppTheme.themeData,
-        home: const HomePage(),
+        home: const RootNavigator(),
       ),
+    );
+  }
+}
+
+class RootNavigator extends StatelessWidget {
+  const RootNavigator({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Consumer<AppState>(
+      builder: (context, state, _) {
+        if (state.userId.isEmpty) {
+          return const LoginScreen();
+        }
+        if (!state.onboardingComplete) {
+          return const OnboardingScreen();
+        }
+        return const HomePage();
+      },
     );
   }
 }
@@ -34,13 +55,16 @@ class HomePage extends StatelessWidget {
       appBar: AppBar(title: const Text('Fintouch')),
       backgroundColor: AppTheme.backgroundColor,
       body: Center(
-        child: ElevatedButton(
-          onPressed: () => state.setUser('demo'),
-          child: Text(
-            state.userId.isEmpty
-                ? 'Login (mock)'
-                : 'Logged in as ${state.userId}',
-          ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text('Bienvenido, ${state.profile?.name ?? 'Usuario'}'),
+            const SizedBox(height: 16),
+            ElevatedButton(
+              onPressed: () => state.signOut(),
+              child: const Text('Cerrar Sesión'),
+            ),
+          ],
         ),
       ),
     );
