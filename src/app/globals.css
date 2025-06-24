@@ -1,0 +1,96 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 218 93% 95%;
+    --foreground: 222 47% 11%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 222 47% 11%;
+    
+    --surface-variant: 210 40% 98%;
+    --surface-variant-foreground: 222 47% 11%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 222 47% 11%;
+
+    --primary: 217 89% 61%;
+    --primary-foreground: 0 0% 98%;
+
+    --secondary: 210 40% 96.1%;
+    --secondary-foreground: 222 47% 11%;
+
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 210 30% 50%;
+
+    --accent: 145 58% 46%;
+    --accent-foreground: 0 0% 98%;
+
+    --destructive: 0 72% 51%;
+    --destructive-foreground: 0 0% 98%;
+
+    --border: 214 32% 91%;
+    --input: 214 32% 91%;
+    --ring: 217 89% 61%;
+
+    --chart-1: 217 89% 61%;
+    --chart-2: 145 58% 46%;
+    --chart-3: 30 80% 55%;
+    --chart-4: 280 65% 60%;
+    --chart-5: 190 75% 50%;
+
+    --radius: 0.5rem;
+  }
+
+  .dark {
+    --background: 212 28% 8%; /* #0F141B */
+    --foreground: 213 67% 97%; /* #F5F7FA */
+
+    --card: 213 21% 15%; /* #1F2630 */
+    --card-foreground: 215 45% 93%; /* #E6ECF4 */
+
+    --surface-variant: 214 20% 18%; /* #232A33 */
+    --surface-variant-foreground: 215 45% 93%; /* #E6ECF4 */
+
+    --popover: 217 28% 22%; /* #283548 */
+    --popover-foreground: 215 45% 93%; /* #E6ECF4 */
+
+    --primary: 216 100% 61%; /* #3A8CFF */
+    --primary-foreground: 0 0% 100%; /* #FFFFFF */
+
+    --secondary: 217 33% 17%; /* #1E2A3A */
+    --secondary-foreground: 0 0% 100%; /* #FFFFFF */
+
+    --muted: 214 22% 11%; /* #151B23 */
+    --muted-foreground: 215 13% 66%; /* #9AA5B5 */
+
+    --accent: 160 63% 52%; /* #3AD29F */
+    --accent-foreground: 161 100% 5%; /* #001B12 */
+
+    --destructive: 0 100% 68%; /* #FF5B5B */
+    --destructive-foreground: 0 0% 100%; /* #FFFFFF */
+
+    --border: 218 16% 21%; /* #2C3340 */
+    --input: 218 16% 21%; /* #2C3340 */
+    --ring: 216 100% 61%; /* #3A8CFF */
+
+    --chart-1: 216 100% 61%; /* #3A8CFF */
+    --chart-2: 160 63% 52%; /* #3AD29F */
+    --chart-3: 31 100% 71%; /* #FFB86C */
+    --chart-4: 326 100% 74%; /* #FF79C6 */
+    --chart-5: 135 94% 65%; /* #50FA7B */
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground font-body;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+}

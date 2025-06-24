@@ -1,0 +1,29 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Permite a un usuario leer y actualizar su propio perfil.
+    match /users/{userId} {
+      allow read, write: if request.auth != null && request.auth.uid == userId;
+    }
+
+    // Permite a un usuario gestionar completamente sus propias transacciones.
+    match /users/{userId}/transactions/{transactionId} {
+      allow read, write: if request.auth != null && request.auth.uid == userId;
+    }
+
+    // Permite a un usuario gestionar sus propias categorías.
+    match /users/{userId}/categories/{categoryId} {
+      allow read, write: if request.auth != null && request.auth.uid == userId;
+    }
+
+    // Permite a un usuario gestionar sus propios presupuestos.
+    match /users/{userId}/budgets/{budgetId} {
+      allow read, write: if request.auth != null && request.auth.uid == userId;
+    }
+
+    // Permite a un usuario gestionar sus propios pagos recurrentes.
+    match /users/{userId}/recurringTransactions/{recurringId} {
+      allow read, write: if request.auth != null && request.auth.uid == userId;
+    }
+  }
+}
