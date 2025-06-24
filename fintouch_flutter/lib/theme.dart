@@ -8,16 +8,23 @@ class AppTheme {
 
   static ThemeData get themeData => ThemeData(
         primaryColor: primaryColor,
+        scaffoldBackgroundColor: backgroundColor,
         colorScheme: ColorScheme.fromSeed(
           seedColor: primaryColor,
           primary: primaryColor,
           secondary: accentColor,
           background: backgroundColor,
         ),
-        textTheme: TextTheme(
+        textTheme: GoogleFonts.interTextTheme().copyWith(
+          displayLarge: GoogleFonts.spaceGrotesk(),
+          displayMedium: GoogleFonts.spaceGrotesk(),
+          displaySmall: GoogleFonts.spaceGrotesk(),
+          headlineLarge: GoogleFonts.spaceGrotesk(),
           headlineMedium: GoogleFonts.spaceGrotesk(),
-          bodyLarge: GoogleFonts.inter(),
-          bodyMedium: GoogleFonts.inter(),
+          headlineSmall: GoogleFonts.spaceGrotesk(),
+          titleLarge: GoogleFonts.spaceGrotesk(),
+          titleMedium: GoogleFonts.spaceGrotesk(),
+          titleSmall: GoogleFonts.spaceGrotesk(),
         ),
       );
 }
