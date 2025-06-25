@@ -1,14 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:provider/provider.dart';
 
 import 'providers/app_state.dart';
+import 'screens/login_screen.dart';
+import 'screens/onboarding_screen.dart';
 import 'theme.dart';
 import 'pages/budgets_page.dart';
 import 'pages/reports_page.dart';
 import 'services/audio_service.dart';
 import 'services/ocr_service.dart';
 
-void main() {
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   runApp(const FintouchApp());
 }
 
@@ -22,8 +27,27 @@ class FintouchApp extends StatelessWidget {
       child: MaterialApp(
         title: 'Fintouch',
         theme: AppTheme.themeData,
-        home: const HomePage(),
+        home: const RootNavigator(),
       ),
+    );
+  }
+}
+
+class RootNavigator extends StatelessWidget {
+  const RootNavigator({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Consumer<AppState>(
+      builder: (context, state, _) {
+        if (state.userId.isEmpty) {
+          return const LoginScreen();
+        }
+        if (!state.onboardingComplete) {
+          return const OnboardingScreen();
+        }
+        return const HomePage();
+      },
     );
   }
 }
@@ -93,6 +117,7 @@ class HomePage extends StatelessWidget {
                 }
               },
               child: const Text('Escanear Recibo'),
+
             ),
           ],
         ),
