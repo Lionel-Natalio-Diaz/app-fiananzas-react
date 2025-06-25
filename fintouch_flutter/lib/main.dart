@@ -6,10 +6,14 @@ import 'providers/app_state.dart';
 import 'screens/login_screen.dart';
 import 'screens/onboarding_screen.dart';
 import 'theme.dart';
+import 'screens/dashboard_page.dart';
+import 'screens/categories_page.dart';
+
 import 'pages/budgets_page.dart';
 import 'pages/reports_page.dart';
 import 'services/audio_service.dart';
 import 'services/ocr_service.dart';
+
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -32,6 +36,7 @@ class FintouchApp extends StatelessWidget {
     );
   }
 }
+
 
 class RootNavigator extends StatelessWidget {
   const RootNavigator({super.key});
@@ -56,7 +61,25 @@ class HomePage extends StatelessWidget {
   const HomePage({super.key});
 
   @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  int _index = 0;
+
+  final _pages = const [DashboardPage(), CategoriesPage()];
+
+  @override
   Widget build(BuildContext context) {
+    return Scaffold(
+      body: _pages[_index],
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: _index,
+        onTap: (i) => setState(() => _index = i),
+        items: const [
+          BottomNavigationBarItem(icon: Icon(Icons.dashboard), label: 'Inicio'),
+          BottomNavigationBarItem(icon: Icon(Icons.category), label: 'Categorías'),
+        ],
     final state = Provider.of<AppState>(context);
     final audioService = AudioService();
     final ocrService = OcrService();

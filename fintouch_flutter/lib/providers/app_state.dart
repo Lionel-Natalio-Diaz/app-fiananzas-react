@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 
 import '../models.dart';
+import '../constants.dart';
 import '../services/auth_service.dart';
 
 class AppState extends ChangeNotifier {
@@ -24,9 +25,19 @@ class AppState extends ChangeNotifier {
     notifyListeners();
   }
 
+  List<UserCategory> categories = List.from(defaultCategories);
+  List<Transaction> transactions = [];
+
+  void setUser(String id) {
+    userId = id;
   void completeOnboarding({required String name, required String language, required String currency}) {
     profile = UserProfile(name: name, language: language, currency: currency);
     onboardingComplete = true;
+    notifyListeners();
+  }
+
+  void addTransaction(Transaction transaction) {
+    transactions.add(transaction);
     notifyListeners();
   }
 }
