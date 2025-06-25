@@ -6,6 +6,10 @@ import 'providers/app_state.dart';
 import 'screens/login_screen.dart';
 import 'screens/onboarding_screen.dart';
 import 'theme.dart';
+import 'pages/budgets_page.dart';
+import 'pages/reports_page.dart';
+import 'services/audio_service.dart';
+import 'services/ocr_service.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -54,18 +58,66 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final state = Provider.of<AppState>(context);
+    final audioService = AudioService();
+    final ocrService = OcrService();
+
+    if (state.userId.isEmpty) {
+      return Scaffold(
+        appBar: AppBar(title: const Text('Fintouch')),
+        backgroundColor: AppTheme.backgroundColor,
+        body: Center(
+          child: ElevatedButton(
+            onPressed: () => state.setUser('demo'),
+            child: const Text('Login (mock)'),
+          ),
+        ),
+      );
+    }
+
     return Scaffold(
       appBar: AppBar(title: const Text('Fintouch')),
       backgroundColor: AppTheme.backgroundColor,
       body: Center(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisSize: MainAxisSize.min,
           children: [
-            Text('Bienvenido, ${state.profile?.name ?? 'Usuario'}'),
-            const SizedBox(height: 16),
             ElevatedButton(
-              onPressed: () => state.signOut(),
-              child: const Text('Cerrar Sesión'),
+              onPressed: () => Navigator.of(context).push(
+                MaterialPageRoute(builder: (_) => const BudgetsPage()),
+              ),
+              child: const Text('Presupuestos'),
+            ),
+            const SizedBox(height: 8),
+            ElevatedButton(
+              onPressed: () => Navigator.of(context).push(
+                MaterialPageRoute(builder: (_) => const ReportsPage()),
+              ),
+              child: const Text('Informes'),
+            ),
+            const SizedBox(height: 8),
+            ElevatedButton(
+              onPressed: () async {
+                final text = await audioService.recordAndTranscribe();
+                if (context.mounted) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(content: Text(text ?? 'Sin texto')),
+                  );
+                }
+              },
+              child: const Text('Grabar Audio'),
+            ),
+            const SizedBox(height: 8),
+            ElevatedButton(
+              onPressed: () async {
+                final text = await ocrService.pickAndExtractText();
+                if (context.mounted) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(content: Text(text ?? 'Sin texto')),
+                  );
+                }
+              },
+              child: const Text('Escanear Recibo'),
+
             ),
           ],
         ),
